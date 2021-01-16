@@ -41,7 +41,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"8c96ffa72808b1dfe1f2f0bbe9c18959","google":"UA-150435252-1","gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"8c96ffa72808b1dfe1f2f0bbe9c18959","google":"UA-150435252-1","gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -125,18 +125,6 @@
             </li>
           
         
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
@@ -154,7 +142,7 @@
   </div>
 </nav>
 
-    <div class="banner intro-2" id="background" parallax=true
+    <div class="banner" id="banner" parallax=true
          style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
@@ -175,7 +163,7 @@
 
   <main>
     
-      <div class="container nopadding-md">
+      <div class="container nopadding-x-md">
         <div class="py-5" id="board"
           >
           
@@ -200,7 +188,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckio6h28o0003uoocf97ahi7r" role="tab" data-toggle="collapse" href="#collapse-ckio6h28o0003uoocf97ahi7r"
+        id="heading-ckjzcyykr00033soc99ul6baa" role="tab" data-toggle="collapse" href="#collapse-ckjzcyykr00033soc99ul6baa"
         aria-expanded="false"
       >
         日常学习
@@ -208,15 +196,22 @@
       </a>
       <a href="/categories/%E6%97%A5%E5%B8%B8%E5%AD%A6%E4%B9%A0/" class="category-count col-2 col-md-1">
         <i class="iconfont icon-articles"></i>
-        <span>3</span>
+        <span>4</span>
       </a>
       <div class="category-collapse">
         
           
-  <div id="collapse-ckio6h28o0003uoocf97ahi7r" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckio6h28o0003uoocf97ahi7r">
+  <div id="collapse-ckjzcyykr00033soc99ul6baa" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckjzcyykr00033soc99ul6baa">
     
     
+    
+      
+      
+        <a href="/2021/01/16/%E5%8D%95%E7%89%87%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/" class="list-group-item list-group-item-action">
+          <span class="category-post">单片机学习笔记（1）</span>
+        </a>
+      
     
       
       
@@ -250,7 +245,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckio6h28x000euooc0xki9m8o" role="tab" data-toggle="collapse" href="#collapse-ckio6h28x000euooc0xki9m8o"
+        id="heading-ckjzcyyky00093soc2oce0juc" role="tab" data-toggle="collapse" href="#collapse-ckjzcyyky00093soc2oce0juc"
         aria-expanded="false"
       >
         生活
@@ -263,8 +258,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckio6h28x000euooc0xki9m8o" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckio6h28x000euooc0xki9m8o">
+  <div id="collapse-ckjzcyyky00093soc2oce0juc" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckjzcyyky00093soc2oce0juc">
     
     
     
@@ -340,11 +335,8 @@
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
   <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
     NProgress.start()
-    document.addEventListener('DOMContentLoaded', function() {
-      window.NProgress && window.NProgress.inc();
-    })
     window.addEventListener('load', function() {
       NProgress.done();
     })

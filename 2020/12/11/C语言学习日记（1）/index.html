@@ -57,7 +57,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.6","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"8c96ffa72808b1dfe1f2f0bbe9c18959","google":"UA-150435252-1","gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":true,"baidu":"8c96ffa72808b1dfe1f2f0bbe9c18959","google":"UA-150435252-1","gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -141,18 +141,6 @@
             </li>
           
         
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/links/">
-                <i class="iconfont icon-link-fill"></i>
-                友链
-              </a>
-            </li>
-          
-        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
@@ -170,7 +158,7 @@
   </div>
 </nav>
 
-    <div class="banner intro-2" id="background" parallax=true
+    <div class="banner" id="banner" parallax=true
          style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
@@ -198,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      723 字
+      727 字
     </span>
   
 
@@ -230,11 +218,11 @@
     
       
 
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
     <div class="d-none d-lg-block col-lg-2"></div>
-    <div class="col-lg-8 nopadding-md">
-      <div class="container nopadding-md" id="board-ctn">
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
@@ -242,19 +230,19 @@
             
             <div class="markdown-body">
               <p>&emsp;&emsp;今天谈谈在学习C语言的时候碰到的一些问题，这里在博客上做一点简单的记录。</p>
-<h2 id="一、关于scanf函数"><a href="#一、关于scanf函数" class="headerlink" title="一、关于scanf函数"></a>一、关于scanf函数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">scanf();<br></code></pre></td></tr></table></figure>
+<h2 id="一、关于scanf函数"><a href="#一、关于scanf函数" class="headerlink" title="一、关于scanf函数"></a>一、关于scanf函数</h2><figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">scanf();<br></code></pre></div></td></tr></table></figure>
 <p>&emsp;&emsp;在使用Scanf函数的时候，遇到输入空格、回车、Tab键时，都是默认当前的字符输入结束，此时电脑并不会将以上的三种情况算作你输入的值。这里要多说一句，如果你发现程序运行结束之后，返回的结果是空值（也就是啥都没有），那就要先检查一下你的scanf里面的变量名，前面有没有加上“&amp;”（取地址符）。</p>
 <h2 id="二、关于C语言中的次方运算"><a href="#二、关于C语言中的次方运算" class="headerlink" title="二、关于C语言中的次方运算"></a>二、关于C语言中的次方运算</h2><p>&emsp;&emsp;首先要说明的是，在C语言中作乘法计算，计算机不识别“ ^ ”运算符。下面介绍两种常见的次方运算方式：</p>
-<h3 id="（1）调用math-h头文件，利用pow-函数解决"><a href="#（1）调用math-h头文件，利用pow-函数解决" class="headerlink" title="（1）调用math.h头文件，利用pow()函数解决"></a>（1）调用math.h头文件，利用pow()函数解决</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#include&lt;stdio.h&gt;</span><br><span class="hljs-comment">#include&lt;math.h&gt;</span><br>int main()<br>&#123;<br>	int a,b;<br>	scanf(<span class="hljs-string">&quot;%d&quot;</span>,&amp;a);<br>	b=pow(a,2);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>,b);<br>	<span class="hljs-built_in">return</span> 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="1、调用math-h头文件，利用pow-函数解决"><a href="#1、调用math-h头文件，利用pow-函数解决" class="headerlink" title="1、调用math.h头文件，利用pow()函数解决"></a>1、调用math.h头文件，利用pow()函数解决</h3><figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment">#include&lt;stdio.h&gt;</span><br><span class="hljs-comment">#include&lt;math.h&gt;</span><br>int main()<br>&#123;<br>	int a,b;<br>	scanf(<span class="hljs-string">&quot;%d&quot;</span>,&amp;a);<br>	b=pow(a,2);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>,b);<br>	<span class="hljs-built_in">return</span> 0;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>&emsp;&emsp;上面那一行代码主要目的是计算你输入的“a”的平方。在上面的代码块当中，我们定义了两个整型变量a和b。当程序运行至<code>scanf(&quot;%d&quot;,&amp;a)</code>时,我们在程序框内输入一个数，计算机会把该数的值赋予a，使得a会等于我们输入的数值。此时程序运行下一步，pow函数就是用来计算a的平方，并且将结果赋予b,最后输出结果。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pow(<span class="hljs-string">&quot;这里输入被平方的数，一般是变量名&quot;</span>，<span class="hljs-string">&quot;这里输入次方数&quot;</span>)<br></code></pre></td></tr></table></figure>
-<p>这个方法适用于高阶次方运算。</p>
-<h3 id="（2）使用连乘的方式"><a href="#（2）使用连乘的方式" class="headerlink" title="（2）使用连乘的方式"></a>（2）使用连乘的方式</h3><p>&emsp;&emsp;这个方法相对而言就简单很多，同样的以上面的代码为例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#include&lt;stdio.h&gt;</span><br>int main()<br>&#123;<br>	int a,b;<br>	scanf(<span class="hljs-string">&quot;%d&quot;</span>,&amp;a)；<br>	b=a*a;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>,b);<br>	<span class="hljs-built_in">return</span> 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">pow(<span class="hljs-string">&quot;这里输入被平方的数，一般是变量名&quot;</span>，<span class="hljs-string">&quot;这里输入次方数&quot;</span>)<br></code></pre></div></td></tr></table></figure>
+<p>&emsp;&emsp;这个方法适用于高阶次方运算。</p>
+<h3 id="2、使用连乘的方式"><a href="#2、使用连乘的方式" class="headerlink" title="2、使用连乘的方式"></a>2、使用连乘的方式</h3><p>&emsp;&emsp;这个方法相对而言就简单很多，同样的以上面的代码为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment">#include&lt;stdio.h&gt;</span><br>int main()<br>&#123;<br>	int a,b;<br>	scanf(<span class="hljs-string">&quot;%d&quot;</span>,&amp;a)；<br>	b=a*a;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>,b);<br>	<span class="hljs-built_in">return</span> 0;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 <p>&emsp;&emsp;这种算法就是明显的数学问题了，这里就不在多说。不过值得一提的是，当计算简单的加减乘除的时候，程序不需要加上<code>&lt;math.h&gt;</code>这个头文件。当然，如果需要计算复杂一点的式子，比如用上面的pow函数计算次方，那你就需要用上<code>&lt;math.h&gt;</code>这个头文件了。</p>
-<h2 id="三、用define定义一个常数"><a href="#三、用define定义一个常数" class="headerlink" title="三、用define定义一个常数"></a>三、用define定义一个常数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#include&lt;stdio.h&gt;</span><br><span class="hljs-comment">#define a 1</span><br></code></pre></td></tr></table></figure>
-<p>上面的define就是用来定义一个常量，在定义之后，下面的程序中a就会等于1，不需要再另外作出定义。</p>
-<p>以上就是我的一些心得，注意，由于博主是一名刚刚初学C语言的一名学生，可能会在理解上或者概念上出现一些问题，所以以上内容仅供参考。</p>
+<h2 id="三、用define定义一个常数"><a href="#三、用define定义一个常数" class="headerlink" title="三、用define定义一个常数"></a>三、用define定义一个常数</h2><figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment">#include&lt;stdio.h&gt;</span><br><span class="hljs-comment">#define a 1</span><br></code></pre></div></td></tr></table></figure>
+<p>&emsp;&emsp;上面的define就是用来定义一个常量，在定义之后，下面的程序中a就会等于1，不需要再另外作出定义。</p>
+<p>&emsp;&emsp;以上就是我的一些心得，注意，由于博主是一名刚刚初学C语言的学生，可能会在理解上或者概念上出现一些问题，所以以上内容仅供参考。</p>
 
             </div>
             <hr>
@@ -281,7 +269,7 @@
                 <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
               
               
-                <div class="post-prevnext row">
+                <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
                     
@@ -378,11 +366,8 @@
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
 
   <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
     NProgress.start()
-    document.addEventListener('DOMContentLoaded', function() {
-      window.NProgress && window.NProgress.inc();
-    })
     window.addEventListener('load', function() {
       NProgress.done();
     })
