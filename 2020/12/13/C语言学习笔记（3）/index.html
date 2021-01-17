@@ -198,7 +198,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      583 字
+      577 字
     </span>
   
 
@@ -247,9 +247,9 @@
 <p>&emsp;&emsp;上面的代码有用switch语句和if……else判断语句的嵌套复合，这里我们只讨论switch语句功能。</p>
 <p>&emsp;&emsp;“switch”是开关的意思，大致框架如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash">switch<br>&#123;<br>	<span class="hljs-keyword">case</span> 常量表达式:语句块;	//这里的语句块是指类似于“<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>,a)”这样的句子<br>	<span class="hljs-built_in">break</span>;<br>	……						//这里的省略号表示可以反复循环3和4语句<br>	default: 语句块；<br>	<span class="hljs-built_in">break</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
-<p>&emsp;&emsp;这里的<code>case</code>之后的语句将作为判断的条件，当碰到<code>break;</code>时，程序将跳过之后语句块，也就是说，若程序在运行过程中会与每一个“case”语句的条件进行一一判定。若没有遇到符合条件，则会继续执行程序。就算匹配到符合条件，如果没有遇到“break”，则继续执行程序，反之则跳出“seitch”语句判断，即<code>break;</code>以下语句不执行。</p>
+<p>&emsp;&emsp;这里的<code>case</code>之后的语句将作为判断的条件，当碰到<code>break;</code>时，程序将跳过之后语句块，也就是说，程序在运行过程中会与每一个“case”语句的条件进行判定。若没有遇到符合条件，则会继续执行程序。就算匹配到符合条件，如果没有遇到“break”，则继续执行程序，反之则跳出“seitch”语句判断，即<code>break;</code>以下语句不执行。</p>
 <p>&emsp;&emsp;当然了，当所有<code>case</code>都不满足相应的条件时，那么计算机则会执行<code>default</code>中的代码。</p>
-<p>&emsp;&emsp;<code>default</code>——中文名称为“缺省值”。在switch语句当中可有可无，执行到后面的“break”时跳出switch判断。</p>
+<p>&emsp;&emsp;<code>default</code>称为“缺省值”。在switch语句当中可有可无，执行到后面的“break”时跳出switch判断。</p>
 <p>&emsp;&emsp;这里推荐一篇文章，讲的更为细致：<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/310.html">switch语句用法注意事项，如何正确使用switch语句？</a></p>
 <h2 id="二、关于平方根的计算"><a href="#二、关于平方根的计算" class="headerlink" title="二、关于平方根的计算"></a>二、关于平方根的计算</h2><p>&emsp;&emsp;虽然在上上期我介绍了两种在C语言中次方计算的方法，但是今天还是要补充一下另一种平方根的计算方式。</p>
 <p>&emsp;&emsp;sprt函数可用于在C语言计算一个非负实数的平方，在使用的过程中同样的用如下形式。</p>
