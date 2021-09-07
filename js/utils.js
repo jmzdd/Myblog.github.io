@@ -207,18 +207,18 @@ const btf = {
    *
    * @param {*} selector
    * @param {*} eleType the type of create element
-   * @param {*} id id
-   * @param {*} cn class name
+   * @param {*} options object key: value
    */
-  wrap: function (selector, eleType, id = '', cn = '') {
+  wrap: (selector, eleType, options) => {
     const creatEle = document.createElement(eleType)
-    if (id) creatEle.id = id
-    if (cn) creatEle.className = cn
+    for (const [key, value] of Object.entries(options)) {
+      creatEle.setAttribute(key, value)
+    }
     selector.parentNode.insertBefore(creatEle, selector)
     creatEle.appendChild(selector)
   },
 
-  unwrap: function (el) {
+  unwrap: el => {
     const elParentNode = el.parentNode
     if (elParentNode !== document.body) {
       elParentNode.parentNode.insertBefore(el, elParentNode)
@@ -226,7 +226,7 @@ const btf = {
     }
   },
 
-  isJqueryLoad: (fn) => {
+  isJqueryLoad: fn => {
     if (typeof jQuery === 'undefined') {
       getScript(GLOBAL_CONFIG.source.jQuery).then(fn)
     } else {
@@ -234,9 +234,9 @@ const btf = {
     }
   },
 
-  isHidden: (ele) => ele.offsetHeight === 0 && ele.offsetWidth === 0,
+  isHidden: ele => ele.offsetHeight === 0 && ele.offsetWidth === 0,
 
-  getEleTop: (ele) => {
+  getEleTop: ele => {
     let actualTop = ele.offsetTop
     let current = ele.offsetParent
 
@@ -246,6 +246,33 @@ const btf = {
     }
 
     return actualTop
-  }
+  },
 
+  loadLightbox: ele => {
+    const service = GLOBAL_CONFIG.lightbox
+
+    if (service === 'mediumZoom') {
+      const zoom = mediumZoom(ele)
+      zoom.on('open', e => {
+        const photoBg = document.documentElement.getAttribute('data-theme') === 'dark' ? '#121212' : '#fff'
+        zoom.update({
+          background: photoBg
+        })
+      })
+    }
+
+    if (service === 'fancybox') {
+      ele.forEach(i => {
+        if (i.parentNode.tagName !== 'A') {
+          const dataSrc = i.dataset.lazySrc || i.src
+          const dataCaption = i.alt || ''
+          btf.wrap(i, 'a', { href: dataSrc, 'data-fancybox': 'gallery', 'data-caption': dataCaption, 'data-thumb': dataSrc })
+        }
+      })
+
+      Fancybox.bind('[data-fancybox]', {
+        Hash: false
+      })
+    }
+  }
 }

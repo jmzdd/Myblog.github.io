@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
- * 首頁top_img底下的箭頭
- */
+   * 首頁top_img底下的箭頭
+   */
   const scrollDownInIndex = () => {
     const $scrollDownEle = document.getElementById('scroll-down')
     $scrollDownEle && $scrollDownEle.addEventListener('click', function () {
@@ -77,9 +77,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
- * 代碼
- * 只適用於Hexo默認的代碼渲染
- */
+   * 代碼
+   * 只適用於Hexo默認的代碼渲染
+   */
   const addHighlightTool = function () {
     const highLight = GLOBAL_CONFIG.highlight
     if (!highLight) return
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $figureHighlight.forEach(function (item) {
           const langName = item.getAttribute('data-language') ? item.getAttribute('data-language') : 'Code'
           const highlightLangEle = `<div class="code-lang">${langName}</div>`
-          btf.wrap(item, 'figure', '', 'highlight')
+          btf.wrap(item, 'figure', { class: 'highlight' })
           createEle(highlightLangEle, item)
         })
       } else {
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       if (isPrismjs) {
         $figureHighlight.forEach(function (item) {
-          btf.wrap(item, 'figure', '', 'highlight')
+          btf.wrap(item, 'figure', { class: 'highlight' })
           createEle('', item)
         })
       } else {
@@ -220,30 +220,38 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
- * PhotoFigcaption
- */
+   * PhotoFigcaption
+   */
   function addPhotoFigcaption () {
     document.querySelectorAll('#article-container img').forEach(function (item) {
       const parentEle = item.parentNode
-      if (!parentEle.parentNode.classList.contains('justified-gallery')) {
+      const altValue = item.alt
+      if (altValue && !parentEle.parentNode.classList.contains('justified-gallery')) {
         const ele = document.createElement('div')
         ele.className = 'img-alt is-center'
-        ele.textContent = item.getAttribute('alt')
+        ele.textContent = altValue
         parentEle.insertBefore(ele, item.nextSibling)
       }
     })
   }
 
   /**
- * justified-gallery 圖庫排版
- * 需要 jQuery
- */
+   * Lightbox
+   * It needs to call it after the Justified Gallery done, or the fancybox maybe not work
+   */
+  const runLightbox = () => {
+    btf.loadLightbox(document.querySelectorAll('#article-container img:not(.no-lightbox)'))
+  }
 
+  /**
+   * justified-gallery 圖庫排版
+   * 需要 jQuery
+   */
   let detectJgJsLoad = false
   const runJustifiedGallery = function (ele) {
     const $justifiedGallery = $(ele)
     const $imgList = $justifiedGallery.find('img')
-    $imgList.unwrap()
+    $imgList.unwrap() // remove <p> tag
     if ($imgList.length) {
       $imgList.each(function (i, o) {
         if ($(o).attr('data-lazy-src')) $(o).attr('src', $(o).attr('data-lazy-src'))
@@ -251,77 +259,32 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     }
 
-    if (detectJgJsLoad) btf.initJustifiedGallery($justifiedGallery)
-    else {
-      $('head').append(`<link rel="stylesheet" type="text/css" href="${GLOBAL_CONFIG.source.justifiedGallery.css}">`)
-      $.getScript(`${GLOBAL_CONFIG.source.justifiedGallery.js}`, function () {
-        btf.initJustifiedGallery($justifiedGallery)
-      })
-      detectJgJsLoad = true
-    }
-  }
+    runLightbox()
 
-  /**
- * fancybox和 mediumZoom
- */
-  const addFancybox = function (ele) {
-    const runFancybox = (ele) => {
-      ele.each(function (i, o) {
-        const $this = $(o)
-        const lazyloadSrc = $this.attr('data-lazy-src') || $this.attr('src')
-        const dataCaption = $this.attr('alt') || ''
-        $this.wrap(`<a href="${lazyloadSrc}" data-fancybox="group" data-caption="${dataCaption}" class="fancybox"></a>`)
-      })
-
-      $().fancybox({
-        selector: '[data-fancybox]',
-        loop: true,
-        transitionEffect: 'slide',
-        protect: true,
-        buttons: ['slideShow', 'fullScreen', 'thumbs', 'close'],
-        hash: false
-      })
+    if (detectJgJsLoad) {
+      btf.initJustifiedGallery($justifiedGallery)
+      return
     }
 
-    if (typeof $.fancybox === 'undefined') {
-      $('head').append(`<link rel="stylesheet" type="text/css" href="${GLOBAL_CONFIG.source.fancybox.css}">`)
-      $.getScript(`${GLOBAL_CONFIG.source.fancybox.js}`, function () {
-        runFancybox($(ele))
-      })
-    } else {
-      runFancybox($(ele))
-    }
-  }
-
-  const addMediumZoom = () => {
-    const zoom = mediumZoom(document.querySelectorAll('#article-container :not(a)>img'))
-    zoom.on('open', e => {
-      const photoBg = document.documentElement.getAttribute('data-theme') === 'dark' ? '#121212' : '#fff'
-      zoom.update({
-        background: photoBg
-      })
-    })
+    $('head').append(`<link rel="stylesheet" type="text/css" href="${GLOBAL_CONFIG.source.justifiedGallery.css}">`)
+    $.getScript(`${GLOBAL_CONFIG.source.justifiedGallery.js}`, () => { btf.initJustifiedGallery($justifiedGallery) })
+    detectJgJsLoad = true
   }
 
   const jqLoadAndRun = () => {
-    const $fancyboxEle = GLOBAL_CONFIG.lightbox === 'fancybox'
-      ? document.querySelectorAll('#article-container :not(a):not(.gallery-group) > img, #article-container > img')
-      : []
-    const fbLengthNoZero = $fancyboxEle.length > 0
     const $jgEle = document.querySelectorAll('#article-container .justified-gallery')
-    const jgLengthNoZero = $jgEle.length > 0
-
-    if (jgLengthNoZero || fbLengthNoZero) {
+    if ($jgEle.length) {
       btf.isJqueryLoad(() => {
-        jgLengthNoZero && runJustifiedGallery($jgEle)
-        fbLengthNoZero && addFancybox($fancyboxEle)
+        runJustifiedGallery($jgEle)
       })
+      return
     }
+    runLightbox()
   }
 
   /**
- * 滾動處理
- */
+   * 滾動處理
+   */
   const scrollFn = function () {
     const $rightside = document.getElementById('rightside')
     const innerHeight = window.innerHeight + 56
@@ -332,55 +295,60 @@ document.addEventListener('DOMContentLoaded', function () {
       return
     }
 
-    let initTop = 0
-    let isChatShow = true
-    const $header = document.getElementById('page-header')
-    const isChatBtnHide = typeof chatBtnHide === 'function'
-    const isChatBtnShow = typeof chatBtnShow === 'function'
-    window.addEventListener('scroll', btf.throttle(function (e) {
-      const currentTop = window.scrollY || document.documentElement.scrollTop
-      const isDown = scrollDirection(currentTop)
-      if (currentTop > 56) {
-        if (isDown) {
-          if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
-          if (isChatBtnShow && isChatShow === true) {
-            chatBtnHide()
-            isChatShow = false
-          }
-        } else {
-          if (!$header.classList.contains('nav-visible')) $header.classList.add('nav-visible')
-          if (isChatBtnHide && isChatShow === false) {
-            chatBtnShow()
-            isChatShow = true
-          }
-        }
-        $header.classList.add('nav-fixed')
-        if (window.getComputedStyle($rightside).getPropertyValue('opacity') === '0') {
-          $rightside.style.cssText = 'opacity: 1; transform: translateX(-38px)'
-        }
-      } else {
-        if (currentTop === 0) {
-          $header.classList.remove('nav-fixed', 'nav-visible')
-        }
-        $rightside.style.cssText = "opacity: ''; transform: ''"
-      }
-
-      if (document.body.scrollHeight <= innerHeight) {
-        $rightside.style.cssText = 'opacity: 1; transform: translateX(-38px)'
-      }
-    }, 200))
-
     // find the scroll direction
     function scrollDirection (currentTop) {
       const result = currentTop > initTop // true is down & false is up
       initTop = currentTop
       return result
     }
+
+    let initTop = 0
+    let isChatShow = true
+    const $header = document.getElementById('page-header')
+    const isChatBtnHide = typeof chatBtnHide === 'function'
+    const isChatBtnShow = typeof chatBtnShow === 'function'
+
+    window.scrollCollect = () => {
+      return btf.throttle(function (e) {
+        const currentTop = window.scrollY || document.documentElement.scrollTop
+        const isDown = scrollDirection(currentTop)
+        if (currentTop > 56) {
+          if (isDown) {
+            if ($header.classList.contains('nav-visible')) $header.classList.remove('nav-visible')
+            if (isChatBtnShow && isChatShow === true) {
+              chatBtnHide()
+              isChatShow = false
+            }
+          } else {
+            if (!$header.classList.contains('nav-visible')) $header.classList.add('nav-visible')
+            if (isChatBtnHide && isChatShow === false) {
+              chatBtnShow()
+              isChatShow = true
+            }
+          }
+          $header.classList.add('nav-fixed')
+          if (window.getComputedStyle($rightside).getPropertyValue('opacity') === '0') {
+            $rightside.style.cssText = 'opacity: 1; transform: translateX(-38px)'
+          }
+        } else {
+          if (currentTop === 0) {
+            $header.classList.remove('nav-fixed', 'nav-visible')
+          }
+          $rightside.style.cssText = "opacity: ''; transform: ''"
+        }
+
+        if (document.body.scrollHeight <= innerHeight) {
+          $rightside.style.cssText = 'opacity: 1; transform: translateX(-38px)'
+        }
+      }, 200)()
+    }
+
+    window.addEventListener('scroll', scrollCollect)
   }
 
   /**
- *  toc
- */
+  *  toc
+  */
   const tocFn = function () {
     const $cardTocLayout = document.getElementById('card-toc')
     const $cardToc = $cardTocLayout.getElementsByClassName('toc-content')[0]
@@ -509,8 +477,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
- * Rightside
- */
+   * Rightside
+   */
   const rightSideFn = {
     switchReadMode: () => { // read-mode
       const $body = document.body
@@ -574,7 +542,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       saveToLocal.set('global-font-size', newValue, 2)
-      // document.getElementById('font-text').innerText = newValue
     }
   }
 
@@ -608,34 +575,21 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
   /**
- * menu
- * 側邊欄sub-menu 展開/收縮
- * 解決menus在觸摸屏下，滑動屏幕menus_item_child不消失的問題（手機hover的bug)
- */
-  const clickFnOfSubMenu = function () {
-    document.querySelectorAll('#sidebar-menus .expand').forEach(function (e) {
-      e.addEventListener('click', function () {
+   * menu
+   * 側邊欄sub-menu 展開/收縮
+   * 解決menus在觸摸屏下，滑動屏幕menus_item_child不消失的問題（手機hover的bug)
+   */
+  const clickFnOfSubMenu = () => {
+    document.querySelectorAll('#sidebar-menus .site-page.group').forEach(function (item) {
+      item.addEventListener('click', function () {
         this.classList.toggle('hide')
-        const $dom = this.parentNode.nextElementSibling
-        if (btf.isHidden($dom)) {
-          $dom.style.display = 'block'
-        } else {
-          $dom.style.display = 'none'
-        }
-      })
-    })
-
-    window.addEventListener('touchmove', function (e) {
-      const $menusChild = document.querySelectorAll('#nav .menus_item_child')
-      $menusChild.forEach(item => {
-        if (!btf.isHidden(item)) item.style.display = 'none'
       })
     })
   }
 
   /**
- * 複製時加上版權信息
- */
+   * 複製時加上版權信息
+   */
   const addCopyright = () => {
     const copyright = GLOBAL_CONFIG.copyright
     document.body.oncopy = (e) => {
@@ -659,8 +613,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
- * 網頁運行時間
- */
+   * 網頁運行時間
+   */
   const addRuntime = () => {
     const $runtimeCount = document.getElementById('runtimeshow')
     if ($runtimeCount) {
@@ -670,8 +624,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
- * 最後一次更新時間
- */
+   * 最後一次更新時間
+   */
   const addLastPushDate = () => {
     const $lastPushDateItem = document.getElementById('last-push-date')
     if ($lastPushDateItem) {
@@ -681,20 +635,20 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
- * table overflow
- */
+   * table overflow
+   */
   const addTableWrap = function () {
     const $table = document.querySelectorAll('#article-container :not(.highlight) > table, #article-container > table')
     if ($table.length) {
       $table.forEach(item => {
-        btf.wrap(item, 'div', '', 'table-wrap')
+        btf.wrap(item, 'div', { class: 'table-wrap' })
       })
     }
   }
 
   /**
- * tag-hide
- */
+   * tag-hide
+   */
   const clickFnOfTagHide = function () {
     const $hideInline = document.querySelectorAll('#article-container .hide-button')
     if ($hideInline.length) {
@@ -833,7 +787,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initAdjust()
 
     if (GLOBAL_CONFIG_SITE.isPost) {
-      GLOBAL_CONFIG_SITE.isToc && tocFn()
       GLOBAL_CONFIG.noticeOutdate !== undefined && addPostOutdateNotice()
       GLOBAL_CONFIG.relativeDate.post && relativeDate(document.querySelectorAll('#post-meta time'))
     } else {
@@ -843,12 +796,12 @@ document.addEventListener('DOMContentLoaded', function () {
       toggleCardCategory()
     }
 
+    GLOBAL_CONFIG_SITE.isToc && tocFn()
     sidebarFn()
     GLOBAL_CONFIG_SITE.isHome && scrollDownInIndex()
     addHighlightTool()
     GLOBAL_CONFIG.isPhotoFigcaption && addPhotoFigcaption()
     jqLoadAndRun()
-    GLOBAL_CONFIG.lightbox === 'mediumZoom' && addMediumZoom()
     scrollFn()
     addTableWrap()
     clickFnOfTagHide()
